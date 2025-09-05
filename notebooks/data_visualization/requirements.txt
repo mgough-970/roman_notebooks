@@ -1,6 +1,6 @@
 asdf==3.0.1
-astrocut==1.0.1
 astropy==6.0.1
+jdaviz==4.3.1
 matplotlib==3.8.2
 numpy==1.24.3
 roman_datamodels==0.27.0

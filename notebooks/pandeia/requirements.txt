@@ -1,2 +1,2 @@
-pandeia.engine
-scipy
+numpy==1.24.3
+scipy==1.16.1
