@@ -1,5 +1,5 @@
-astropy==6.0.1
-matplotlib==3.8.2
-roman_datamodels==0.27.0
-romancal==0.20.2
-s3fs==2025.9.0
+astropy
+matplotlib
+roman_datamodels
+romancal
+s3fs
