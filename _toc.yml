@@ -1,8 +1,53 @@
 # Table of contents
 # Learn more at https://jupyterbook.org/customize/toc.html
 format: jb-book
-root: intro
+root: index
 parts:
- - caption: Example
-   chapters:
-   - file: notebooks/example_notebook/example_notebook.ipynb
+  - caption: aperture_photometry
+    chapters:
+    - file: notebooks/aperture_photometry/aperture_photometry.ipynb
+  - caption: data_discovery_and_access
+    chapters:
+    - file: notebooks/data_discovery_and_access/data_discovery_and_access.ipynb
+  - caption: data_visualization
+    chapters:
+    - file: notebooks/data_visualization/data_visualization.ipynb
+  - caption: exposure_pipeline
+    chapters:
+    - file: notebooks/exposure_pipeline/exposure_pipeline.ipynb
+  - caption: grism_spectral_extraction
+    chapters:
+    - file: notebooks/grism_spectral_extraction/grism_spectral_extraction.ipynb
+  - caption: measuring_galaxy_shapes
+    chapters:
+    - file: notebooks/measuring_galaxy_shapes/measuring_galaxy_shapes.ipynb
+  - caption: mosaic_pipeline
+    chapters:
+    - file: notebooks/mosaic_pipeline/mosaic_pipeline.ipynb
+  - caption: pandeia
+    chapters:
+    - file: notebooks/pandeia/pandeia.ipynb
+  - caption: rist
+    chapters:
+    - file: notebooks/rist/rist.ipynb
+  - caption: roman_cutouts
+    chapters:
+    - file: notebooks/roman_cutouts/roman_cutouts.ipynb
+  - caption: romanisim
+    chapters:
+    - file: notebooks/romanisim/romanisim.ipynb
+  - caption: stips
+    chapters:
+    - file: notebooks/stips/stips.ipynb
+  - caption: stpsf
+    chapters:
+    - file: notebooks/stpsf/stpsf.ipynb
+  - caption: synphot
+    chapters:
+    - file: notebooks/synphot/synphot.ipynb
+  - caption: time_domain_simulations
+    chapters:
+    - file: notebooks/time_domain_simulations/time_domain_simulations.ipynb
+  - caption: working_with_asdf
+    chapters:
+    - file: notebooks/working_with_asdf/working_with_asdf.ipynb
