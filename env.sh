@@ -5,7 +5,7 @@
 # Set variables for current session AND future steps
 export CRDS_SERVER_URL="https://roman-crds.stsci.edu"
 export CRDS_PATH="${HOME}/.crds_cache"
-export CRDS_CONTEXT="roman_latest.pmap"
+export CRDS_CONTEXT="roman_0027.pmap"
 export PYSYN_CDBS="${HOME}/.synphot_data"
 export AWS_DEFAULT_REGION="us-east-1"
 export OMP_NUM_THREADS="4"
