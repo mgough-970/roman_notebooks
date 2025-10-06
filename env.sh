@@ -40,11 +40,11 @@ mkdir -p "$pandeia_refdata"
 
 # Get the data
 # Download Pandeia reference data if not already present
-if [ ! -d "$pandeia_refdata/pandeia_data" ]; then
-  wget https://stsci.box.com/v/pandeia-data-v2025p9-roman -O /tmp/pandeia_data.zip
-  unzip /tmp/pandeia_data.zip -d "$pandeia_refdata"
-  rm /tmp/pandeia_data.zip
-fi
+#if [ ! -d "$pandeia_refdata/pandeia_data" ]; then
+#  wget https://stsci.box.com/v/pandeia-data-v2025p9-roman -O /tmp/pandeia_data.zip
+#  unzip /tmp/pandeia_data.zip -d "$pandeia_refdata"
+#  rm /tmp/pandeia_data.zip
+#fi
 
 # Download STIPS reference data if not already present
 if [ ! -d "$HOME/.stips_data" ]; then
