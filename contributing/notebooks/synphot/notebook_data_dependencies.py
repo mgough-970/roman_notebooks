@@ -5,7 +5,7 @@ import yaml
 
 
 def install_files(dependencies='https://raw.githubusercontent.com/spacetelescope/roman_notebooks/refs/heads/main/refdata_dependencies.yaml',
-                     verbose=False):
+                     verbose=False, packages=None):
     """
     PURPOSE
     -------
@@ -41,6 +41,10 @@ def install_files(dependencies='https://raw.githubusercontent.com/spacetelescope
         data in the file system.
 
     verbose (bool): Print messages to the standard out. Default is False.
+    
+    packages (None, list, str): List of packages for which to install reference data. This can
+    be a list of string package names, a comma separated string of package names, or None. If None, 
+    then install package reference data for all packages in the dependencies file. Default None.
         
     RETURNS
     -------
@@ -56,8 +60,19 @@ def install_files(dependencies='https://raw.githubusercontent.com/spacetelescope
     else:
         req = requests.get(dependencies, allow_redirects=True)
         yf = yaml.safe_load(req.content)['install_files']
+        
+    # If only installing certain packages, check that now and limit the dictionary to
+    # just those package keys.
+    if packages:
+        if isinstance(packages, str):
+            packages = packages.split(',')
+            
+        keys = yf.keys()
+        skips = [k  for k in keys if k not in packages]
+        for s in skips:
+            _ = yf.pop(s)
 
-    # Loop over every package defined in the dependencies YAML file.
+    # Loop over packages defined in the dependencies dictionary.
     home = os.environ['HOME']
     result = {}
     for package in yf.keys():
