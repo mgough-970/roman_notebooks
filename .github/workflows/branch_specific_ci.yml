@@ -1,0 +1,71 @@
+# Notebook CI - Development Branch Pull Request Workflow
+# 
+# SETUP INSTRUCTIONS:
+# 1. Copy this file to your repository's .github/workflows/ directory
+# 2. Customize the trigger branches below (line 19-21)
+# 3. Update Python version and CRDS settings if needed (lines 36-43)
+# 4. Adjust pre-processing script path if different (line 46)
+# 5. Modify path filters if your notebooks are in different locations (lines 23-31)
+#
+# WORKFLOW BEHAVIOR:
+# Runs validation (nbval), security (bandit), and execution for all notebooks
+# Generates test reports and posts results to PR
+# Does NOT store outputs to gh-storage (main branch only)
+# Does NOT build HTML documentation (main branch only)
+
+name: Notebook CI - Dev Branch PR
+
+on:
+  pull_request:
+    branches: 
+      - dev       # Customize: Add your development branch names here
+      # Examples: release/v*, feature/*, hotfix/*
+    paths:
+      # Customize: Adjust these paths to match your repository structure
+      - 'notebooks/**'           # Main notebook directory
+      - 'requirements.txt'       # Python dependencies
+      - 'pyproject.toml'         # Project configuration
+      - '*.yml'                  # Workflow and config files
+      - '*.yaml'
+      - '*.md'                   # Documentation
+      - '*.html'                 # HTML templates
+      - '*.css'                  # Stylesheets
+      - '*.js'                   # JavaScript files
+
+jobs:
+  dev-branch-validation:
+    uses: spacetelescope/notebook-ci-actions/.github/workflows/notebook-ci-unified.yml@v1
+    with:
+      # Execution Configuration
+      execution-mode: 'pr'                    # DO NOT CHANGE: Required for PR workflows
+      
+      # Environment Configuration
+      # Customize: Set your Python version (e.g., '3.11', '3.12', '3.13')
+      python-version: '3.13'
+      
+      # CRDS Configuration (for Roman/JWST pipelines)
+      # Customize: Update these values for your specific CRDS requirements
+      # For non-CRDS projects, you can omit these or leave them as empty strings
+      crds-server-url: 'https://roman-crds.stsci.edu'    # CRDS server URL
+      crds-context: 'roman_0041.pmap'                    # CRDS context/pmap version
+      crds-path: '/home/runner/crds_cache'               # Cache location
+      
+      # Pre-processing and Runner Configuration
+      # Customize: Path to your pre-processing script (relative to repo root)
+      pre-processing-script: 'shared/notebook_data_dependencies_rev1.py'
+      custom-runner-config: true              # Enable custom runner labels from ci_config.txt
+      
+      # Feature Flags - Dev Branch Strategy
+      # Customize: Set to true/false to enable/disable specific checks
+      enable-validation: true       # Run nbval validation
+      enable-security: true         # Run bandit security testing
+      enable-execution: true        # Execute all notebooks
+      enable-storage: false         # NO storage to gh-storage (main branch only)
+      enable-html-build: false      # NO HTML generation (main branch only)
+      
+    secrets:
+      # Customize: Add your repository secrets here
+      # These are optional - only include if your notebooks require them
+      CASJOBS_USERID: ${{ secrets.CASJOBS_USERID }}   # MAST CasJobs credentials (optional)
+      CASJOBS_PW: ${{ secrets.CASJOBS_PW }}           # MAST CasJobs password (optional)
+
