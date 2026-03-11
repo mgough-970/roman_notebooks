@@ -63,22 +63,19 @@ jobs:
           echo "bootstrap_path=$BOOTSTRAP_PATH" >> "$GITHUB_OUTPUT"
           echo "env_file=$ENV_FILE" >> "$GITHUB_OUTPUT"
 
-          echo "Notebook found: $NOTEBOOK_PATH"
-          echo "Notebook directory: $NOTEBOOK_DIR"
-          echo "Requirements: $REQUIREMENTS_PATH"
-          if [ -f "$BOOTSTRAP_PATH" ]; then
-            echo "Bootstrap found: $BOOTSTRAP_PATH"
-          else
-            echo "Bootstrap not found, notebook will run without bootstrap."
-          fi
-
       - name: Install notebook requirements
         shell: bash
         run: |
           set -euo pipefail
           python -m pip install --upgrade pip
           pip install -r "${{ steps.locate.outputs.requirements_path }}"
-          pip install nbconvert nbformat nbclient jupyter
+          pip install nbconvert nbformat nbclient jupyter ipykernel
+
+      - name: Register CI kernel
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m ipykernel install --user --name python3 --display-name "Python 3"
 
       - name: Run bootstrap if it exists
         shell: bash
@@ -112,7 +109,8 @@ jobs:
             --execute "${{ steps.locate.outputs.notebook_path }}" \
             --output "${{ steps.locate.outputs.notebook_stem }}.html" \
             --output-dir rendered \
-            --ExecutePreprocessor.timeout=1800
+            --ExecutePreprocessor.timeout=1800 \
+            --ExecutePreprocessor.kernel_name=python3
 
       - name: Upload rendered HTML
         uses: actions/upload-artifact@v4
