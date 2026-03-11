@@ -68,14 +68,18 @@ def extract_archive(archive_path: Path, extract_to: Path) -> None:
     print(f"Extracting {archive_path} -> {extract_to}")
     extract_to.mkdir(parents=True, exist_ok=True)
 
-    suffixes = "".join(archive_path.suffixes).lower()
-
-    if suffixes.endswith(".tar") or suffixes.endswith(".tgz") or suffixes.endswith(".tar.gz"):
+    # Try tar first regardless of filename extension.
+    # This handles files like "...something.gz" that are actually tar.gz archives.
+    try:
         with tarfile.open(archive_path, "r:*") as tf:
             tf.extractall(path=extract_to)
         return
+    except tarfile.ReadError:
+        pass
 
-    if suffixes.endswith(".gz") and not suffixes.endswith(".tar.gz"):
+    # Fall back to plain gzip single-file extraction
+    suffixes = "".join(archive_path.suffixes).lower()
+    if suffixes.endswith(".gz"):
         output_path = extract_to / archive_path.stem
         with gzip.open(archive_path, "rb") as src, open(output_path, "wb") as dst:
             shutil.copyfileobj(src, dst)
@@ -113,6 +117,11 @@ def ensure_dataset(name: str, spec: dict[str, object], resolved_env: dict[str, s
                 extract_archive(archive_path, install_path)
 
         if not final_path.exists():
+            # Helpful debug output
+            print(f"Expected final path was not created: {final_path}")
+            print(f"Contents of install path {install_path}:")
+            for child in sorted(install_path.iterdir()):
+                print(f" - {child}")
             raise RuntimeError(
                 f"{name} data downloaded but expected directory not found: {final_path}"
             )
@@ -239,6 +248,10 @@ def build_manifest(spec: dict[str, Any], keys: list[str]) -> dict[str, Any]:
     install_files = spec["install_files"]
     other_variables = spec.get("other_variables", {})
 
+    missing = [k for k in keys if k not in install_files]
+    if missing:
+        raise KeyError(f"Missing install_files entries for inferred keys: {missing}")
+
     selected = {k: install_files[k] for k in keys}
 
     return {
@@ -274,18 +287,14 @@ def main() -> None:
     args = parse_args()
 
     notebook = find_notebook(args.notebook_name)
-
     requirements = notebook.parent / "requirements.txt"
 
     if not requirements.exists():
         raise FileNotFoundError(f"No requirements.txt in {notebook.parent}")
 
     packages = load_requirements(requirements)
-
     refdata_keys = infer_refdata_keys(packages)
-
     refdata_spec = load_yaml(REFDATA_SPEC_PATH)
-
     manifest = build_manifest(refdata_spec, refdata_keys)
 
     write_outputs(notebook, manifest)
