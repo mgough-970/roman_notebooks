@@ -1,0 +1,121 @@
+name: Execute Notebook to HTML
+
+on:
+  workflow_dispatch:
+    inputs:
+      notebook_name:
+        description: "Notebook filename, for example: example.ipynb"
+        required: true
+        type: string
+
+jobs:
+  execute-notebook:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Locate notebook and related files
+        id: locate
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          NOTEBOOK_NAME="${{ inputs.notebook_name }}"
+
+          mapfile -t MATCHES < <(find notebooks -type f -name "$NOTEBOOK_NAME" | sort)
+
+          if [ "${#MATCHES[@]}" -eq 0 ]; then
+            echo "Notebook '$NOTEBOOK_NAME' was not found under notebooks/"
+            exit 1
+          fi
+
+          if [ "${#MATCHES[@]}" -gt 1 ]; then
+            echo "Notebook name '$NOTEBOOK_NAME' is ambiguous. Multiple matches found:"
+            printf ' - %s\n' "${MATCHES[@]}"
+            exit 1
+          fi
+
+          NOTEBOOK_PATH="${MATCHES[0]}"
+          NOTEBOOK_DIR="$(dirname "$NOTEBOOK_PATH")"
+          NOTEBOOK_FILE="$(basename "$NOTEBOOK_PATH")"
+          NOTEBOOK_STEM="${NOTEBOOK_FILE%.ipynb}"
+          REQUIREMENTS_PATH="$NOTEBOOK_DIR/requirements.txt"
+          BOOTSTRAP_PATH="$NOTEBOOK_DIR/bootstrap_${NOTEBOOK_STEM}.py"
+          ENV_FILE="$NOTEBOOK_DIR/${NOTEBOOK_STEM}.env"
+
+          if [ ! -f "$REQUIREMENTS_PATH" ]; then
+            echo "No requirements.txt found at: $REQUIREMENTS_PATH"
+            exit 1
+          fi
+
+          echo "notebook_path=$NOTEBOOK_PATH" >> "$GITHUB_OUTPUT"
+          echo "notebook_dir=$NOTEBOOK_DIR" >> "$GITHUB_OUTPUT"
+          echo "notebook_file=$NOTEBOOK_FILE" >> "$GITHUB_OUTPUT"
+          echo "notebook_stem=$NOTEBOOK_STEM" >> "$GITHUB_OUTPUT"
+          echo "requirements_path=$REQUIREMENTS_PATH" >> "$GITHUB_OUTPUT"
+          echo "bootstrap_path=$BOOTSTRAP_PATH" >> "$GITHUB_OUTPUT"
+          echo "env_file=$ENV_FILE" >> "$GITHUB_OUTPUT"
+
+          echo "Notebook found: $NOTEBOOK_PATH"
+          echo "Notebook directory: $NOTEBOOK_DIR"
+          echo "Requirements: $REQUIREMENTS_PATH"
+          if [ -f "$BOOTSTRAP_PATH" ]; then
+            echo "Bootstrap found: $BOOTSTRAP_PATH"
+          else
+            echo "Bootstrap not found, notebook will run without bootstrap."
+          fi
+
+      - name: Install notebook requirements
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          pip install -r "${{ steps.locate.outputs.requirements_path }}"
+          pip install nbconvert nbformat nbclient jupyter
+
+      - name: Run bootstrap if it exists
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          BOOTSTRAP_PATH="${{ steps.locate.outputs.bootstrap_path }}"
+          ENV_FILE="${{ steps.locate.outputs.env_file }}"
+
+          if [ -f "$BOOTSTRAP_PATH" ]; then
+            echo "Running bootstrap: $BOOTSTRAP_PATH"
+            python "$BOOTSTRAP_PATH" --write-env-file "$ENV_FILE"
+
+            if [ -f "$ENV_FILE" ]; then
+              echo "Loading environment variables from $ENV_FILE"
+              cat "$ENV_FILE" >> "$GITHUB_ENV"
+            fi
+          else
+            echo "No bootstrap script found, skipping bootstrap step."
+          fi
+
+      - name: Execute notebook and convert to HTML
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p rendered
+
+          jupyter nbconvert \
+            --to html \
+            --execute "${{ steps.locate.outputs.notebook_path }}" \
+            --output "${{ steps.locate.outputs.notebook_stem }}.html" \
+            --output-dir rendered \
+            --ExecutePreprocessor.timeout=1800
+
+      - name: Upload rendered HTML
+        uses: actions/upload-artifact@v4
+        with:
+          name: notebook-html-${{ steps.locate.outputs.notebook_stem }}
+          path: rendered/*.html
