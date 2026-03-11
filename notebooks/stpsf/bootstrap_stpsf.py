@@ -71,9 +71,7 @@ def ensure_dataset(name: str, spec: dict[str, object], resolved_env: dict[str, s
         with tempfile.TemporaryDirectory(dir=str(install_path)) as tmpdir:
             tmpdir_path = Path(tmpdir)
             downloads_dir = tmpdir_path / "downloads"
-            staging_dir = tmpdir_path / "extract"
             downloads_dir.mkdir(parents=True, exist_ok=True)
-            staging_dir.mkdir(parents=True, exist_ok=True)
 
             for idx, url in enumerate(urls, start=1):
                 filename = Path(url).name or f"{name}_{idx}.download"
@@ -84,10 +82,14 @@ def ensure_dataset(name: str, spec: dict[str, object], resolved_env: dict[str, s
                 if not is_supported_archive(archive_path):
                     raise RuntimeError(f"Downloaded file is not a supported archive: {archive_path}")
 
-                extract_archive(archive_path, staging_dir)
+                extract_archive(archive_path, install_path)
 
-            if not final_path.exists():
-                print(f"Installed {name} into {install_path}")
+        if not final_path.exists():
+            raise RuntimeError(
+                f"{name} data downloaded but expected directory not found: {final_path}"
+            )
+
+        print(f"Installed {name} into {final_path}")
 
     resolved_env[env_var] = str(final_path)
     os.environ[env_var] = str(final_path)
@@ -104,6 +106,7 @@ def set_other_variables(resolved_env: dict[str, str]) -> None:
 
 def write_env_file(env_path: Path, env_map: dict[str, str]) -> None:
     env_path.parent.mkdir(parents=True, exist_ok=True)
+
     with env_path.open("w", encoding="utf-8") as f:
         for key, value in env_map.items():
             f.write(f"{key}={value}\n")
