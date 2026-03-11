@@ -1,0 +1,45 @@
+name: Generate Notebook Bootstrap
+
+on:
+  workflow_dispatch:
+    inputs:
+      notebook_name:
+        description: "Notebook filename, for example: example.ipynb"
+        required: true
+        type: string
+
+jobs:
+  generate-bootstrap:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml
+
+      - name: Generate bootstrap script
+        run: |
+          python .github/scripts/generate_notebook_bootstrap.py \
+            --notebook-name "${{ inputs.notebook_name }}"
+
+      - name: Show generated files
+        run: |
+          echo "Generated bootstrap files:"
+          find notebooks -type f \( -name "bootstrap_*.py" -o -name "*.refdata.yml" \) | sort
+
+      - name: Upload generated bootstrap artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-bootstrap-${{ inputs.notebook_name }}
+          path: |
+            notebooks/**/bootstrap_*.py
+            notebooks/**/*.refdata.yml
