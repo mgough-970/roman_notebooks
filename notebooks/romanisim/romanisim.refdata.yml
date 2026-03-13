@@ -1,0 +1,5 @@
+install_files: {}
+other_variables:
+  CRDS_SERVER_URL: https://roman-crds.stsci.edu
+  CRDS_CONTEXT: roman_0041.pmap
+  CRDS_PATH: ${HOME}/crds_cache
