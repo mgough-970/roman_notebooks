@@ -1,11 +1,11 @@
 install_files:
   pandeia:
-    version: 2025.9
+    version: 2026.1
     data_url:
     - https://stsci.box.com/shared/static/0qjvuqwkurhx1xd13i63j760cosep9wh.gz
     environment_variable: pandeia_refdata
     install_path: ${HOME}/refdata/
-    data_path: pandeia_data-2025.9-roman
+    data_path: pandeia_data-2026.1-roman
 other_variables:
   CRDS_SERVER_URL: https://roman-crds.stsci.edu
   CRDS_CONTEXT: roman_0041.pmap
