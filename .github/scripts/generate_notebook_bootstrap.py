@@ -22,6 +22,7 @@ PACKAGE_TO_REFDATA = {
     "synphot": ["synphot"],
     "pandeia": ["pandeia"],
     "pandeia-engine": ["pandeia"],
+    "pandeia.engine": ["pandeia"],
     "stips": ["stips"],
 }
 
