@@ -12,7 +12,7 @@ import urllib.request
 from pathlib import Path
 
 
-INSTALL_FILES = {}
+INSTALL_FILES = {'pandeia': {'version': 2025.9, 'data_url': ['https://stsci.box.com/shared/static/0qjvuqwkurhx1xd13i63j760cosep9wh.gz'], 'environment_variable': 'pandeia_refdata', 'install_path': '${HOME}/refdata/', 'data_path': 'pandeia_data-2025.9-roman'}}
 OTHER_VARIABLES = {'CRDS_SERVER_URL': 'https://roman-crds.stsci.edu', 'CRDS_CONTEXT': 'roman_0041.pmap', 'CRDS_PATH': '${HOME}/crds_cache'}
 
 
