@@ -65,11 +65,11 @@ jobs:
       enable-execution: false
       enable-storage: false
       enable-html-build: false
-      crds-server-url: 'https://roman-crds.stsci.edu'
-      crds-context: 'roman_0041.pmap'
-      crds-path: '/home/runner/crds_cache'
-      pre-processing-script: 'shared/notebook_data_dependencies_rev1.py'
-      custom-runner-config: true
+      #crds-server-url: 'https://roman-crds.stsci.edu'
+      #crds-context: 'roman_0041.pmap'
+      #crds-path: '/home/runner/crds_cache'
+      #pre-processing-script: 'shared/notebook_data_dependencies_rev1.py'
+      #custom-runner-config: true
     secrets:
       CASJOBS_USERID: ${{ secrets.CASJOBS_USERID }}
       CASJOBS_PW: ${{ secrets.CASJOBS_PW }}
@@ -87,11 +87,11 @@ jobs:
       enable-execution: true
       enable-storage: false
       enable-html-build: false
-      crds-server-url: 'https://roman-crds.stsci.edu'
-      crds-context: 'roman_0041.pmap'
-      crds-path: '/home/runner/crds_cache'
-      pre-processing-script: 'shared/notebook_data_dependencies_rev1.py'
-      custom-runner-config: true
+      #crds-server-url: 'https://roman-crds.stsci.edu'
+      #crds-context: 'roman_0041.pmap'
+      #crds-path: '/home/runner/crds_cache'
+     # pre-processing-script: 'shared/notebook_data_dependencies_rev1.py'
+      #custom-runner-config: true
     secrets:
       CASJOBS_USERID: ${{ secrets.CASJOBS_USERID }}
       CASJOBS_PW: ${{ secrets.CASJOBS_PW }}
