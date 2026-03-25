@@ -38,7 +38,7 @@ def _load_yaml(dependencies):
 
 
 def install_files(
-    dependencies="https://raw.githubusercontent.com/spacetelescope/roman_notebooks/refs/heads/main/refdata_dependencies.yaml",
+    dependencies="https://raw.githubusercontent.com/mgough-970/roman_notebooks/refs/heads/main/refdata_dependencies.yaml",
     verbose=True,
     packages=None,
 ):
