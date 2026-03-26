@@ -28,7 +28,7 @@ install_files:
     version: 2.3.0
     data_url:
       - https://stsci.box.com/shared/static/761vz7zav7pux03fg0hhqq7z2uw8nmqw.tgz
-    environment_variable: stips_data
+    environment_variable: STIPS_DATA
     install_path: ${HOME}/refdata/
     data_path: stips_data
   synphot:
