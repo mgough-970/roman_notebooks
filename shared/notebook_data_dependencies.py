@@ -81,7 +81,7 @@ def install_files(dependencies=None, verbose=True, packages=None):
             _ = yf.pop(s)
 
     # Loop over packages defined in the dependencies dictionary.
-    home = os.environ['HOME']
+    home = os.environ.get('HOME', os.path.expanduser('~'))
     result = {}
     for package in yf.keys():
         envvar = yf[package]['environment_variable']
@@ -120,7 +120,7 @@ def install_files(dependencies=None, verbose=True, packages=None):
                     download_file.write(req.content)
                 with tarfile.open(file_name) as tarball:
                     members = tarball.getmembers()
-                    tarball.extractall(path=final_path, members=members, filter=None)
+                    tarball.extractall(path=final_path, members=members, filter='data')
                 os.remove(file_name)
 
             # Messages to the user
@@ -133,13 +133,42 @@ def install_files(dependencies=None, verbose=True, packages=None):
     # can be set programmatically.
     return result
 
-def setup_env(result):
+def _load_yaml(dependencies=None):
+    """Load the refdata_dependencies YAML from a local path or URL."""
+    DEPENDENCIES_PATH = Path(__file__).parent.parent / "refdata_dependencies.yaml"
+    if not dependencies:
+        dependencies = DEPENDENCIES_PATH
+    if os.path.exists(dependencies):
+        with open(dependencies, 'r') as f:
+            return yaml.safe_load(f)
+    else:
+        if not dependencies or dependencies == DEPENDENCIES_PATH:
+            dependencies = 'https://raw.githubusercontent.com/spacetelescope/roman_notebooks/refs/heads/main/refdata_dependencies.yaml'
+        req = requests.get(dependencies, allow_redirects=True)
+        return yaml.safe_load(req.content)
+
+
+def setup_env(result, dependencies=None, verbose=True):
     # Update environment variables (if necessary) and print reference data paths
     print('Reference data paths set to:')
     for k, v in result.items():
         if not v['pre_installed']:
             os.environ[k] = v['path']
         print(f"\t{k} = {v['path']}")
+
+    # Also apply other_variables from the YAML (e.g. CRDS env vars)
+    yf = _load_yaml(dependencies)
+    other = yf.get('other_variables', {})
+    home = os.environ.get('HOME', os.path.expanduser('~'))
+    for key, value in other.items():
+        value = str(value).replace('${HOME}', home)
+        if key not in os.environ:
+            os.environ[key] = value
+            if verbose:
+                print(f"\t{key} = {value}")
+        elif verbose:
+            print(f"\t{key} = {os.environ[key]} (pre-set, not overwritten)")
+
 
 if __name__ == 'main':
     
