@@ -7,6 +7,6 @@ asdf-astropy>=0.7.1
 roman_datamodels==0.27.0
 s3fs>=2025.5.1
 scipy>=1.15.2
-synphot>=1.5.0
-stsynphot>=1.4.0
+synphot==1.6.0
+stsynphot==1.5.1
 stpsf>=2.1.0

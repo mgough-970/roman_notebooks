@@ -3,4 +3,4 @@ pandeia.engine==2026.1
 astropy>=7.0.1
 matplotlib>=3.10.0
 esutil>=0.6.16 # --no-cache-dir option recommended on pip install
-stsynphot 
+stsynphot==1.5.1
