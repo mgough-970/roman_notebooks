@@ -151,7 +151,7 @@ def setup_env(result,
     home = os.environ.get('HOME', os.path.expanduser('~'))
     for key, value in other.items():
         value = str(value).replace('${HOME}', home)
-        if key not in os.environ:
+        if not os.environ.get(key):  # treat missing or empty string the same
             os.environ[key] = value
             if verbose:
                 print(f"\t{key} = {value}")
