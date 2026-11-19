@@ -15,9 +15,12 @@ Markdown documentation files are contained within the `markdown/` folder.
 
 ## Local Installation
 
-The notebooks in this repository are designed to work on the Roman Research Nexus for the best user experience. Due to the size of Roman data, local use is not recommended for most users. However, we provide instructions for local installation below. For detailed instructions refer to the [**Working Localy**](markdown/local-run.md) instructions.
+The notebooks in this repository are designed to work on the Roman Research Nexus for the best user experience. Due to the size of Roman data, local use is not recommended for most users. However, we provide instructions for local installation below. For detailed instructions refer to the [**Working Locally**](markdown/local-run.md) instructions.
 
 ## Get Support
+
+Reference-data release assets and development overrides are described in
+[Release reference-data snapshots](markdown/refdata-snapshots.md).
 
 Please refer to the [Roman Documentation (RDox)](https://roman-docs.stsci.edu) website for technical documentation about the Roman Space Telescope.
 
