@@ -83,6 +83,151 @@
       "environment_variable": "STPSF_PATH",
       "install_path": "${HOME}/refdata/",
       "version": "2.1.0"
+    },
+    "synphot": {
+      "archives": [
+        {
+          "name": "refdata-synphot-001.tar",
+          "parts": [
+            {
+              "name": "refdata-synphot-001.tar",
+              "sha256": "2fae151348602ca8e4009f52f01bfd1793efc246e6478c8413438c694662ba72",
+              "size": 1420943360
+            }
+          ],
+          "sha256": "2fae151348602ca8e4009f52f01bfd1793efc246e6478c8413438c694662ba72",
+          "size": 1420943360,
+          "source_url": "https://archive.stsci.edu/hlsps/reference-atlases/hlsp_reference-atlases_hst_multi_everything_multi_v20_sed.tar"
+        },
+        {
+          "name": "refdata-synphot-002.tar",
+          "parts": [
+            {
+              "name": "refdata-synphot-002.tar",
+              "sha256": "66faaaeeb04e855a09c6cb8bc9b748c8fbedf23b782208dba84e10c4f0fd450b",
+              "size": 90347520
+            }
+          ],
+          "sha256": "66faaaeeb04e855a09c6cb8bc9b748c8fbedf23b782208dba84e10c4f0fd450b",
+          "size": 90347520,
+          "source_url": "https://archive.stsci.edu/hlsps/reference-atlases/hlsp_reference-atlases_hst_multi_star-galaxy-models_multi_v3_synphot2.tar"
+        },
+        {
+          "name": "refdata-synphot-003.tar",
+          "parts": [
+            {
+              "name": "refdata-synphot-003.tar",
+              "sha256": "8f7a220bc9480900c372015847057b06a2c218ae8b2dbf8020e6a1dd2990b42c",
+              "size": 42772480
+            }
+          ],
+          "sha256": "8f7a220bc9480900c372015847057b06a2c218ae8b2dbf8020e6a1dd2990b42c",
+          "size": 42772480,
+          "source_url": "https://archive.stsci.edu/hlsps/reference-atlases/hlsp_reference-atlases_hst_multi_castelli-kurucz-2004-atlas_multi_v2_synphot3.tar"
+        },
+        {
+          "name": "refdata-synphot-004.tar",
+          "parts": [
+            {
+              "name": "refdata-synphot-004.tar",
+              "sha256": "95ca73356f38a703064c346e286f571b53f78964d5511d1b538ff086f5ce897e",
+              "size": 81684480
+            }
+          ],
+          "sha256": "95ca73356f38a703064c346e286f571b53f78964d5511d1b538ff086f5ce897e",
+          "size": 81684480,
+          "source_url": "https://archive.stsci.edu/hlsps/reference-atlases/hlsp_reference-atlases_hst_multi_kurucz-1993-atlas_multi_v2_synphot4.tar"
+        },
+        {
+          "name": "refdata-synphot-005.tar",
+          "parts": [
+            {
+              "name": "refdata-synphot-005.tar",
+              "sha256": "1ffb5e136dc4f846cd95b83843eb89f7a5171f58732705b25f07a99c4d8cf50d",
+              "size": 1868328960
+            }
+          ],
+          "sha256": "1ffb5e136dc4f846cd95b83843eb89f7a5171f58732705b25f07a99c4d8cf50d",
+          "size": 1868328960,
+          "source_url": "https://archive.stsci.edu/hlsps/reference-atlases/hlsp_reference-atlases_hst_multi_phoenix-models_multi_v3_synphot5.tar"
+        },
+        {
+          "name": "refdata-synphot-006.tar",
+          "parts": [
+            {
+              "name": "refdata-synphot-006.tar.part00001",
+              "sha256": "e5ff85bfa1c9bc271a6134fa57e11b2a60d5884cef34a8fbc1b59f973037bdbf",
+              "size": 1992294400
+            },
+            {
+              "name": "refdata-synphot-006.tar.part00002",
+              "sha256": "154e9b883f5eeb9c2073c60ab3061656320d78253201dc5d4a02c5f787646a95",
+              "size": 1992294400
+            },
+            {
+              "name": "refdata-synphot-006.tar.part00003",
+              "sha256": "518b8c365d4f634d49bc93e927d988da99fa25d30f9d3ee7a93760e10e2a3242",
+              "size": 1992294400
+            },
+            {
+              "name": "refdata-synphot-006.tar.part00004",
+              "sha256": "52a249d84f1f8690ff14031be0d948ec6f06ae6d678d47777707e6d501777d2c",
+              "size": 1992294400
+            },
+            {
+              "name": "refdata-synphot-006.tar.part00005",
+              "sha256": "01db0d2130ff75a170631a742c1fec7ad8ad90c5b4d18b81612b04d1fc32f3c4",
+              "size": 1062973440
+            }
+          ],
+          "sha256": "a1c135b43c376f77ec23833303398a6c8ae95a9ddd83b3fa11dadb0cb3d738f2",
+          "size": 9032151040,
+          "source_url": "https://archive.stsci.edu/hlsps/reference-atlases/hlsp_reference-atlases_hst_multi_calibration-spectra_multi_v14_synphot6.tar"
+        },
+        {
+          "name": "refdata-synphot-007.tar",
+          "parts": [
+            {
+              "name": "refdata-synphot-007.tar",
+              "sha256": "150d17b2fc74d965bd9ba4d0f76a1f352bbbe3d6b4f76d346f2f39ca4d9fbb47",
+              "size": 128256000
+            }
+          ],
+          "sha256": "150d17b2fc74d965bd9ba4d0f76a1f352bbbe3d6b4f76d346f2f39ca4d9fbb47",
+          "size": 128256000,
+          "source_url": "https://archive.stsci.edu/hlsps/reference-atlases/hlsp_reference-atlases_jwst_multi_etc-models_multi_v2_synphot7.tar"
+        },
+        {
+          "name": "refdata-synphot-008.tar",
+          "parts": [
+            {
+              "name": "refdata-synphot-008.tar",
+              "sha256": "3338b1fb400d752c02c06132e0ce804ef8a9751f6ff535b41d022f60b0364d81",
+              "size": 34160640
+            }
+          ],
+          "sha256": "3338b1fb400d752c02c06132e0ce804ef8a9751f6ff535b41d022f60b0364d81",
+          "size": 34160640,
+          "source_url": "https://archive.stsci.edu/hlsps/reference-atlases/hlsp_reference-atlases_hst_multi_modewave_multi_v1_synphot8.tar"
+        },
+        {
+          "name": "refdata-synphot-009.tar",
+          "parts": [
+            {
+              "name": "refdata-synphot-009.tar",
+              "sha256": "2c6291fea4eb09bf5a2fba703f51dc1ac9240fa2a9bba20c03725ef7280031aa",
+              "size": 122357760
+            }
+          ],
+          "sha256": "2c6291fea4eb09bf5a2fba703f51dc1ac9240fa2a9bba20c03725ef7280031aa",
+          "size": 122357760,
+          "source_url": "https://archive.stsci.edu/hlsps/reference-atlases/hlsp_reference-atlases_hst_multi_other-spectra_multi_v3_sed.tar"
+        }
+      ],
+      "data_path": "grp/redcat/trds/",
+      "environment_variable": "PYSYN_CDBS",
+      "install_path": "${HOME}/refdata/",
+      "version": "1.6.0"
     }
   },
   "other_variables": {
@@ -91,7 +236,7 @@
     "CRDS_PATH": "${HOME}/crds_cache",
     "CRDS_SERVER_URL": "https://roman-crds.stsci.edu"
   },
-  "release": "2026.1.1",
+  "release": "2026.1.2",
   "remote_data": {
     "consumers": [
       "notebooks/pandeia",
